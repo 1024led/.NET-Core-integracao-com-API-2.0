@@ -59,13 +59,15 @@ namespace Cotacao.Controllers
 
             Models.Services.RequisicaoService requisicao = new Models.Services.RequisicaoService();
 
-            Console.WriteLine("moeda selecionada: " + moeda);
-
+            DateTime dataT = cotacao.Data;
             requisicao.Dia = Convert.ToString(cotacao.Data.Day, 10);
             requisicao.Mes = Convert.ToString(cotacao.Data.Month, 10);
-            requisicao.ano = Convert.ToString(cotacao.Data.Year, 10);
+            requisicao.Ano = Convert.ToString(cotacao.Data.Year, 10);
 
             requisicao.VerificaFimSemana(cotacao);
+
+            cotacao.Data = dataT;
+
 
             requisicao.moeda = moeda;
 
