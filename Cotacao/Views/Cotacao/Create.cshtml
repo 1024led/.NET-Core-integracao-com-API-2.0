@@ -1,0 +1,102 @@
+﻿@model Cotacao
+
+@{ ViewData["Title"] = "Inserir"; }
+
+@{
+    List<SelectListItem> ListMoedas = new List<SelectListItem>();
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Dólar dos Estados Unidos",
+        Value = "USD",
+        Selected = true
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Euro",
+        Value = "EUR",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Dólar Australiano",
+        Value = "AUD",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Dólar Canadense",
+        Value = "CAD",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Franco Suíço",
+        Value = "CHF",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Coroa Dinamarquesa",
+        Value = "DKK",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Libra Esterlina",
+        Value = "GBP",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Iene",
+        Value = "JPY",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Coroa Norueguesa",
+        Value = "NOK",
+
+    });
+    ListMoedas.Add(new SelectListItem
+    {
+        Text = "Coroa Sueca",
+        Value = "SEK",
+
+    });
+}
+
+<h1>Inserir</h1>
+<br>
+
+<h5> 1 - Sábados e domingos utilizam os valores da Segunda-feira seguinte para fins comerciais, se a proxima segunda do dia escolhido não chegou a data será considerada invalida.</h5>
+<br>
+<h5> 2 - Datas da mesma moeda já inseridas no banco de dados não serão aceitas.</h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="Moeda">Moeda de origem</label>
+                @Html.DropDownList("moeda", ListMoedas, new { @class = "form-control" })
+                <br>
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" type="date" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Inserir" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar para a lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

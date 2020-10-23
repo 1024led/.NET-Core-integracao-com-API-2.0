@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Cotacao>
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<h1>Sistema de gerenciamento de Cotações</h1>
+
+<p>
+    <input type="button" value="Inserir nova Cotação" onclick="location.href='@Url.Action("Create", "Cotacao")'" />
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label for="Campo">Moeda Origem</label>
+            </th>
+            <th>
+                <label for="Campo">Moeda Destino</label>
+            </th>
+            <th>
+                <label for="Campo">Valor de compra</label>
+            </th>
+            <th>
+                <label for="Campo">Valor de Venda</label>
+            </th>
+            <th>
+                <label for="Campo">Data da cotação</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderByDescending(m => m.Data)) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoedaOrigem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MoedaDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorVenda)
+            </td>
+            <td>
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Data))
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.CotacaoId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.CotacaoId">Apagar registro</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+﻿@model Cotacao
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h1>Detalhes do resgistro</h1>
+
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <label for="Campo">Moeda Origem</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MoedaOrigem)
+        </dd>
+        <dt class="col-sm-2">
+            <label for="Campo">Moeda Destino</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MoedaDestino)
+        </dd>
+        <dt class="col-sm-2">
+            <label for="Campo">Valor de Compra</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValorCompra)
+        </dd>
+        <dt class="col-sm-2">
+            <label for="Campo">Valor de Venda</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValorVenda)
+        <dt class="col-sm-2">
+            <label for="Campo">Dia da cotação</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data.Day)
+        </dd>
+        <dt class="col-sm-2">
+            <label for="Campo">Mês da cotação</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data.Month)
+        </dd>
+        <dt class="col-sm-2">
+            <label for="Campo">Ano da cotação</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data.Year)
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Voltar para a lista</a>
+    
+</div>
