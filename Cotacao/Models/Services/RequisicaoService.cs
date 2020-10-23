@@ -26,36 +26,29 @@ namespace Cotacao.Models.Services
             }
         }
 
-
         public string ObterUrl()
         {
             return Url;
         }
 
-        public void VerificaFimSemana(Models.Cotacao temp)
+        public void VerificaFimSemana(DateTime temp)
         {
-            if (temp.Data.DayOfWeek.ToString() == "Sunday")
+            if (temp.DayOfWeek.ToString() == "Sunday")
             {
+                temp = temp.AddDays(1);
+                Dia = Convert.ToString(temp.Day, 10);
+                Mes = Convert.ToString(temp.Month, 10);
+                Ano = Convert.ToString(temp.Year, 10);
 
-
-
-                temp.Data = temp.Data.AddDays(1);
-                Dia = Convert.ToString(temp.Data.Day, 10);
-                Mes = Convert.ToString(temp.Data.Month, 10);
-                Ano = Convert.ToString(temp.Data.Year, 10);
-
-                //AtualizarUrl();
             }
 
-            if (temp.Data.DayOfWeek.ToString() == "Saturday")
+            if (temp.DayOfWeek.ToString() == "Saturday")
             {
+                temp = temp.AddDays(2);
+                Dia = Convert.ToString(temp.Day, 10);
+                Mes = Convert.ToString(temp.Month, 10);
+                Ano = Convert.ToString(temp.Year, 10);
 
-                temp.Data = temp.Data.AddDays(2);
-                Dia = Convert.ToString(temp.Data.Day, 10);
-                Mes = Convert.ToString(temp.Data.Month, 10);
-                Ano = Convert.ToString(temp.Data.Year, 10);
-
-                //AtualizarUrl();
             }
 
 

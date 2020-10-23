@@ -27,8 +27,7 @@ namespace Cotacao.Models
         [JsonProperty("dataHoraCotacao")]
         public string dataHoraCotacao { get; set; }
 
-
-        
+    
         public static async Task<CotacaoService> Coletar(Models.Services.RequisicaoService requisicao)
         {
             CotacaoService coletor = new CotacaoService();
@@ -41,8 +40,6 @@ namespace Cotacao.Models
                 HttpResponseMessage response = await client.SendAsync(content);
 
                 Console.WriteLine(requisicao.ObterUrl());
-
-
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -61,8 +58,6 @@ namespace Cotacao.Models
                         coletor.dataHoraCotacao = raiz.Results[index].dataHoraCotacao;
 
                     }
-
-
 
                     Console.WriteLine(responseBody);
                     Console.WriteLine(coletor.cotacaoCompra);

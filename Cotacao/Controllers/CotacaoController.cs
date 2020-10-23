@@ -64,31 +64,24 @@ namespace Cotacao.Controllers
             requisicao.Mes = Convert.ToString(cotacao.Data.Month, 10);
             requisicao.Ano = Convert.ToString(cotacao.Data.Year, 10);
 
-            requisicao.VerificaFimSemana(cotacao);
+            requisicao.VerificaFimSemana(cotacao.Data);
 
             cotacao.Data = dataT;
 
-
             requisicao.moeda = moeda;
-
-
-           
 
             Cotacao.Models.Services.SeletorMoedas seletor = new Cotacao.Models.Services.SeletorMoedas();
 
             string MoedaOrigem = seletor.DicMoedas[moeda];
 
             CotacaoService coletor = CotacaoService.Coletar(requisicao).Result;
-           
-            
-
+     
             cotacao.MoedaOrigem = MoedaOrigem;
             cotacao.MoedaDestino = "Real";
 
             cotacao.ValorCompra = coletor.cotacaoCompra;
             cotacao.ValorVenda = coletor.cotacaoVenda;
-            //cotacao.DataStr = String.Format("{0}/{1}/{2}", cotacao.Data.Day, cotacao.Data.Month, cotacao.Data.Year);
-
+           
             List<Models.Cotacao> lista = CotacaoExists(cotacao.MoedaOrigem);
             bool verify = false;
 
@@ -121,65 +114,8 @@ namespace Cotacao.Controllers
                 return View("errorExist");
                 
             }
-
-            return View(cotacao);
-
         }
 
-
-        /*
-        // GET: Cotacao/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cotacao = await _context.Cotacao.FindAsync(id);
-            if (cotacao == null)
-            {
-                return NotFound();
-            }
-            return View(cotacao);
-        }
-
-        
-        // POST: Cotacao/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CotacaoId,MoedaOrigem,MoedaDestino,ValorCompra,ValorVenda,DataDia,DataMes,DataAno")] Cotacao.Models.Cotacao cotacao)
-        {
-            if (id != cotacao.CotacaoId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(cotacao);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CotacaoExists(cotacao.CotacaoId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cotacao);
-        }
-        */
 
         // GET: Cotacao/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -213,10 +149,9 @@ namespace Cotacao.Controllers
 
         private List<Models.Cotacao> CotacaoExists(string moeda)
         {
-            string comando = "SELECT * FROM Cotacao WHERE CotacaoId = ANY(SELECT CotacaoId FROM Cotacao WHERE MoedaOrigem ='" + moeda +"'); ";
-
-            List<Models.Cotacao> hold = _context.Cotacao.FromSqlRaw(comando).ToList();
-            return hold;
+            var existeMoeda = _context.Cotacao.Where(c => c.MoedaOrigem == moeda).Select(c => c.CotacaoId);
+            var registros = _context.Cotacao.Where(c => existeMoeda.Contains(c.CotacaoId)).ToList();
+            return registros;
         }
 
     }
